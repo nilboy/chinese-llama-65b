@@ -71,8 +71,11 @@ def write_json(text, path):
         json.dump(text, f)
 
 def get_new_embedding(word, old_tokenizer, embedding):
-    sub_word_idx = old_tokenizer.convert_tokens_to_ids(old_tokenizer.tokenize(word)[1:])
-    x = embedding[sub_word_idx].mean(axis=0)
+    sub_words = old_tokenizer.tokenize(word)
+    if len(sub_words) > 1:
+        sub_words = sub_words[1:]
+    sub_word_idx = old_tokenizer.convert_tokens_to_ids(sub_words)
+    x = (embedding[sub_word_idx]/len(sub_words)).sum(axis=0)
     return x
 
 def write_model(model_path, input_base_path, model_size, tokenizer, old_tokenizer):
