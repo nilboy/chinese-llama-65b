@@ -1,0 +1,25 @@
+datamodule:
+  data_dir: /root/autodl-tmp/data
+  tokenizer_path: /root/autodl-tmp/llama-hf/65B
+  batch_size: 2
+  max_token_len: 2048
+  num_workers: 0
+  pin_memory: False
+model:
+  init_model_path: /root/autodl-tmp/llama-hf/65B
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_use_double_quant: True
+  compute_type: bf16
+  lora_r: 64
+  lora_alpha: 16
+  lora_dropout: 0.0
+train:
+  seed: 42
+  weight_decay: 0.0
+  lr: 1e-4
+  warmup_steps: 50
+  num_epochs: 1
+  report_id: tensorboard
+  output_dir: /root/autodl-tmp/output-models-65B
+  gradient_accumulation_steps: 16
+  save_steps: 50
