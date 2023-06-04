@@ -35,7 +35,9 @@ def get_qlora_model(init_model_path,
         bnb_4bit_compute_dtype=compute_type_map[compute_type]
     )
     model = AutoModelForCausalLM.from_pretrained(init_model_path,
-                                                 quantization_config=bnb_config)
+                                                 quantization_config=bnb_config,
+                                                 device_map='auto',
+                                                 max_memory={i: '80000MB' for i in range(torch.cuda.device_count())})
     model.config.torch_dtype = compute_type_map[compute_type]
     model.gradient_checkpointing_enable()
     # get peft model.
