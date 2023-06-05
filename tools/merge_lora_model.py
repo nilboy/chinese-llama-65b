@@ -11,6 +11,12 @@ gc.enable()
 def merge_lora_model(lora_model_path,
                      base_model_path,
                      output_model_path):
+    """
+        Args:
+            lora_model_path: str. lora模型
+            base_model_path: str. 转换为hf的llama模型路径
+            output_model_path: str. 合并后的llama模型路径
+    """
     lora_config = LoraConfig.from_pretrained(lora_model_path)
     lora_dict = {}
     for pt_model in glob.glob(lora_model_path + '/*.bin'):
